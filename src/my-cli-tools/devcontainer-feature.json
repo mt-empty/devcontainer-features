@@ -19,11 +19,6 @@
             "type": "boolean",
             "default": true,
             "description": "Install opencode AI coding agent CLI"
-        },
-        "installGhCopilot": {
-            "type": "boolean",
-            "default": true,
-            "description": "Install gh copilot CLI extension"
         }
     },
     "installsAfter": [
