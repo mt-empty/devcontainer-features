@@ -1,0 +1,32 @@
+{
+    "id": "my-cli-tools",
+    "version": "1.0.0",
+    "name": "My CLI Tools",
+    "description": "Installs a common set of CLI tools: fzf, zoxide, gh, jq, yq, eza, bat, ripgrep, curl, wget, netcat.",
+    "documentationURL": "https://github.com/mt-empty/devcontainer-features",
+    "options": {
+        "installZoxide": {
+            "type": "boolean",
+            "default": true,
+            "description": "Install zoxide (smarter cd)"
+        },
+        "installYq": {
+            "type": "boolean",
+            "default": true,
+            "description": "Install yq (YAML/JSON processor)"
+        },
+        "installOpencode": {
+            "type": "boolean",
+            "default": true,
+            "description": "Install opencode AI coding agent CLI"
+        },
+        "installGhCopilot": {
+            "type": "boolean",
+            "default": true,
+            "description": "Install gh copilot CLI extension"
+        }
+    },
+    "installsAfter": [
+        "ghcr.io/devcontainers/features/common-utils"
+    ]
+}
