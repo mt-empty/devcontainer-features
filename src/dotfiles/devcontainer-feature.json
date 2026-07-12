@@ -8,7 +8,11 @@
         "ghcr.io/devcontainers/features/common-utils"
     ],
     "mounts": [
-        "source=${localEnv:HOME}/.gitconfig,target=/tmp/host-gitconfig,type=bind,readonly"
+        {
+            "source": "${localEnv:HOME}/.gitconfig",
+            "target": "/tmp/host-gitconfig",
+            "type": "bind"
+        }
     ],
     "postCreateCommand": "bash -c 'd=\"$HOME/dotfiles\"; if [ -d \"$d/.git\" ]; then git -C \"$d\" fetch --depth 1 origin master && git -C \"$d\" checkout -q FETCH_HEAD || echo \">>> [dotfiles] WARNING: fetch failed, using existing checkout\"; else git clone --depth 1 --branch master https://github.com/mt-empty/dotfiles.git \"$d\"; fi; chmod +x \"$d/install_devcontainer.sh\"; (cd \"$d\" && bash ./install_devcontainer.sh) || echo \">>> [dotfiles] WARNING: install_devcontainer.sh exited non-zero\"'"
 }

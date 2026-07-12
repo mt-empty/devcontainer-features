@@ -71,7 +71,9 @@ container. Rebuild when you want the latest dotfiles pulled in.
 No options — it always clones `mt-empty/dotfiles@master` and runs
 `install_devcontainer.sh`.
 
-Also bind-mounts the host's `~/.gitconfig` read-only at `/tmp/host-gitconfig`.
+Also bind-mounts the host's `~/.gitconfig` at `/tmp/host-gitconfig` (the Feature
+mount schema has no read-only option, but nothing here ever writes to it — only
+`git config -f /tmp/host-gitconfig --get ...` reads happen).
 `install_devcontainer.sh`'s tracked `.gitconfig` defers identity to a
 git-ignored `~/.gitconfig.local`, and this mount lets it seed that file from
 your real host identity on first run — verified empirically that VS Code's own
