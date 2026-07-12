@@ -20,7 +20,8 @@ apt-get install -y --no-install-recommends \
     ripgrep \
     bat \
     jq \
-    fd-find
+    fd-find \
+    tmux
 
 # eza — not in apt on Debian/Ubuntu <24.04, install from GitHub release
 if ! command -v eza &>/dev/null; then
