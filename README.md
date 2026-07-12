@@ -71,6 +71,14 @@ container. Rebuild when you want the latest dotfiles pulled in.
 No options — it always clones `mt-empty/dotfiles@master` and runs
 `install_devcontainer.sh`.
 
+Also bind-mounts the host's `~/.gitconfig` read-only at `/tmp/host-gitconfig`.
+`install_devcontainer.sh`'s tracked `.gitconfig` defers identity to a
+git-ignored `~/.gitconfig.local`, and this mount lets it seed that file from
+your real host identity on first run — verified empirically that VS Code's own
+"copy .gitconfig into the container" behavior does *not* reliably populate
+`$HOME/.gitconfig` before this feature's `postCreateCommand` runs, so this
+mount exists specifically to not depend on that.
+
 ### `shell-history`
 
 Mounts a Docker volume at `/commandhistory` and sets `HISTFILE` to

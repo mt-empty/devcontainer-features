@@ -1,11 +1,14 @@
 {
     "id": "dotfiles",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "name": "Personal Dotfiles",
     "description": "Clones mt-empty/dotfiles and runs its install_devcontainer.sh. Hardcoded to one repo on purpose — this is a personal feature, not a generic reusable one. The clone+run step is a postCreateCommand, not install.sh, so it re-executes live on every container creation instead of baking into a cached Docker layer: push a commit to the dotfiles repo and the next container/rebuild picks it up, no version bump or cache-busting needed. All actual bootstrap steps live solely in the dotfiles repo, not duplicated here.",
     "documentationURL": "https://github.com/mt-empty/devcontainer-features",
     "installsAfter": [
         "ghcr.io/devcontainers/features/common-utils"
+    ],
+    "mounts": [
+        "source=${localEnv:HOME}/.gitconfig,target=/tmp/host-gitconfig,type=bind,readonly"
     ],
     "postCreateCommand": "bash -c 'd=\"$HOME/dotfiles\"; if [ -d \"$d/.git\" ]; then git -C \"$d\" fetch --depth 1 origin master && git -C \"$d\" checkout -q FETCH_HEAD || echo \">>> [dotfiles] WARNING: fetch failed, using existing checkout\"; else git clone --depth 1 --branch master https://github.com/mt-empty/dotfiles.git \"$d\"; fi; chmod +x \"$d/install_devcontainer.sh\"; (cd \"$d\" && bash ./install_devcontainer.sh) || echo \">>> [dotfiles] WARNING: install_devcontainer.sh exited non-zero\"'"
 }
