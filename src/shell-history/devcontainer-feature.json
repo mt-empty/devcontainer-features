@@ -1,0 +1,18 @@
+{
+    "id": "shell-history",
+    "version": "1.0.0",
+    "name": "Persistent Shell History",
+    "description": "Mounts a Docker volume at /commandhistory and points zsh's HISTFILE at it, so shell history survives container rebuilds. The volume is keyed by ${devcontainerId}, a hash of this project's devcontainer config, so every project gets its own isolated history instead of one shared across all devcontainers.",
+    "documentationURL": "https://github.com/mt-empty/devcontainer-features",
+    "mounts": [
+        {
+            "source": "shellhistory-${devcontainerId}",
+            "target": "/commandhistory",
+            "type": "volume"
+        }
+    ],
+    "containerEnv": {
+        "HISTFILE": "/commandhistory/.zsh_history"
+    },
+    "postCreateCommand": "sudo mkdir -p /commandhistory && sudo chown -R \"$(whoami)\" /commandhistory && touch /commandhistory/.zsh_history"
+}

@@ -19,6 +19,7 @@ Installs a common set of CLI tools into any dev container:
 | `bat` | `cat` with syntax highlighting |
 | `ripgrep` | Fast `grep` |
 | `fd` | Fast `find` |
+| `tmux` | Terminal multiplexer |
 | `curl`, `wget`, `netcat` | Network tools |
 | `opencode` | AI coding agent CLI |
 | `gh copilot` | GitHub Copilot CLI extension |
@@ -69,3 +70,29 @@ container. Rebuild when you want the latest dotfiles pulled in.
 
 No options — it always clones `mt-empty/dotfiles@master` and runs
 `install_devcontainer.sh`.
+
+### `shell-history`
+
+Mounts a Docker volume at `/commandhistory` and sets `HISTFILE` to
+`/commandhistory/.zsh_history`, so shell history survives "Rebuild Container"
+instead of being lost with the old container.
+
+The volume is named `shellhistory-${devcontainerId}` — `devcontainerId` is a
+hash of the project's devcontainer config, so each project gets its own
+isolated volume rather than one history shared across every devcontainer.
+Verified with two separate configs producing two distinct volumes, and a
+container remove+recreate against the same config reattaching the same volume
+with prior history intact.
+
+Only wires up zsh's `HISTFILE`; bash's history mechanism needs `PROMPT_COMMAND`
+instead (see [VS Code's docs](https://code.visualstudio.com/remote/advancedcontainers/persist-bash-history)) and isn't handled by this feature.
+
+**Usage in `devcontainer.json`:**
+
+```json
+"features": {
+    "ghcr.io/mt-empty/devcontainer-features/shell-history:1": {}
+}
+```
+
+No options.
