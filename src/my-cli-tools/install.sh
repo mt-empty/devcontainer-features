@@ -35,8 +35,11 @@ if ! command -v eza &>/dev/null; then
         arm64) EZA_ARCH="aarch64-unknown-linux-gnu" ;;
         *)     echo "Unsupported architecture for eza: $(dpkg --print-architecture)"; exit 1 ;;
     esac
+    # The release tarball stores the binary as "./eza", which doesn't match a
+    # bare "eza" member-name filter in extraction — extract everything instead
+    # (the archive contains only the binary).
     curl -fsSL "https://github.com/eza-community/eza/releases/download/${EZA_VERSION}/eza_${EZA_ARCH}.tar.gz" \
-        | tar -xz -C /usr/local/bin eza
+        | tar -xz -C /usr/local/bin
     chmod +x /usr/local/bin/eza
 fi
 
