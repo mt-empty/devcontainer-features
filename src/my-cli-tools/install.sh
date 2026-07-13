@@ -70,7 +70,10 @@ fi
 if [ "${INSTALL_ZOXIDE}" = "true" ] && ! command -v zoxide &>/dev/null; then
     echo ">>> Installing zoxide..."
     # Force install to /usr/local/bin so it is on PATH for all users, not just root.
-    curl -fsSL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | BINDIR=/usr/local/bin bash
+    # The installer only honors --bin-dir; a BINDIR env var is silently ignored,
+    # which was leaving zoxide in $HOME/.local/bin (i.e. /root/.local/bin at
+    # build time, invisible to the vscode user's PATH at runtime).
+    curl -fsSL https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash -s -- --bin-dir /usr/local/bin
 fi
 
 # yq

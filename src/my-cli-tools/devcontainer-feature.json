@@ -1,6 +1,6 @@
 {
     "id": "my-cli-tools",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "name": "My CLI Tools",
     "description": "Installs a common set of CLI tools: fzf, zoxide, gh, jq, yq, eza, bat, ripgrep, tmux, curl, wget, netcat.",
     "documentationURL": "https://github.com/mt-empty/devcontainer-features",
