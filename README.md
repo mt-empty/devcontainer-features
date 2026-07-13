@@ -71,9 +71,12 @@ container. Rebuild when you want the latest dotfiles pulled in.
 No options — it always clones `mt-empty/dotfiles@master` and runs
 `install_devcontainer.sh`.
 
-Also bind-mounts the host's `~/.gitconfig` at `/tmp/host-gitconfig` (the Feature
+Also bind-mounts the host's `~/.gitconfig` at `/etc/host-gitconfig` (the Feature
 mount schema has no read-only option, but nothing here ever writes to it — only
-`git config -f /tmp/host-gitconfig --get ...` reads happen).
+`git config -f /etc/host-gitconfig --get ...` reads happen). Not `/tmp`:
+`docker-in-docker` runs privileged and its init remounts a fresh tmpfs over
+`/tmp`, silently shadowing anything bind-mounted underneath it — confirmed via
+a full integration test using this repo's actual feature set together.
 `install_devcontainer.sh`'s tracked `.gitconfig` defers identity to a
 git-ignored `~/.gitconfig.local`, and this mount lets it seed that file from
 your real host identity on first run — verified empirically that VS Code's own
